@@ -1,0 +1,38 @@
+[tool.poetry]
+authors = ["bsnacks000 <bsnacks000@gmail.com>"]
+description = "meteo helper cli for bema"
+name = "meteo-cli"
+packages = [{include = "meteo_cli"}]
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+click = "^8.1.7"
+meteostat = "^1.6.7"
+pydantic = "^2.4.2"
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.11.0"
+mypy = "^1.6.1"
+pandas-stubs = "^2.1.1.230928"
+pytest = "^7.2.1"
+pytest-cov = "^4.1.0"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.poetry.scripts]
+meteo-cli = "meteo_cli.main:main"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_level = "INFO"
+markers = ["live: mark a live test", "liverpc: rpc live test"]
+testpaths = ["tests"]
+
+[tool.mypy]
+exclude = ['tests']

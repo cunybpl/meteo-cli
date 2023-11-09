@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  tsdb:
+    restart: "no"
+    container_name: "meteodb_tsdb"
+    image: timescale/timescaledb:2.11.2-pg15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=meteodb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    command: postgres -c 'max_connections=250'
+    expose:
+      - "5432"
+    ports:
+      - "5454:5432" # for debugging 
+    shm_size: 1g
+
+
+volumes:
+  pgdata:
