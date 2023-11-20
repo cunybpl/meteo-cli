@@ -5,7 +5,7 @@ from . import station, base, normals, isd
 
 
 @click.group("meteo-cli")
-def main():
+def main() -> None:
     """meteo-cli"""
 
 
@@ -13,7 +13,7 @@ def main():
 @click.option("-i", "--meteostat_id", type=click.STRING)
 @click.option("--country", default="US")
 @click.option("--state", default="NY")
-def station_(meteostat_id: str | None, country: str, state: str):
+def station_(meteostat_id: str | None, country: str, state: str) -> None:
     """Pull station(s) by region. If given the correct meteo id will pull a specific station.
 
     Ex. $ meteo-cli station 72503
@@ -52,7 +52,9 @@ def station_(meteostat_id: str | None, country: str, state: str):
     default=2020,
     help="End getting normalzied data at this year. Default is 2020.",
 )
-def normals_(meteostat_id: str, measures: list[str], start_year: int, end_year: int):
+def normals_(
+    meteostat_id: str, measures: list[str], start_year: int, end_year: int
+) -> None:
     """Pull monthly normals from meteo given a meteo id. Our application currently supports tavg, tmin and tmax.
     Default years are 1991 -2020 (most recent). You must also include `-m` measure options. We support
     temperature avg, temperature min and temperature max. We convert these to degrees_F.
@@ -95,7 +97,7 @@ def isd_(
     measures: list[str],
     start_date: datetime.datetime,
     end_date: datetime.datetime,
-):
+) -> None:
     """Pull hourly isd data for the given `meteostat_id` between start and end date for the given measures. The `temp` measure
     is converted to degrees_F
 

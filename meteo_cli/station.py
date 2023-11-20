@@ -1,7 +1,7 @@
 import datetime
 
 import pydantic
-from typing import List
+from typing import List, Any
 from meteostat import Stations  # type: ignore
 
 from . import base
@@ -42,15 +42,17 @@ def _fetch(
     stations = Stations()
     local = stations.region(country=country, state=state)
 
-    data: List = local.fetch().reset_index().to_dict("records", index=True)
+    data: List[dict[str, Any]] = (
+        local.fetch().reset_index().to_dict("records", index=True)
+    )
     if id_:
         return StationOutput.model_validate(
             {"data": list(filter(lambda item: item["id"] == id_, data))}
         )
     else:
-        return StationOutput(data=data)
+        return StationOutput(data=data)  # type:ignore
 
 
-def entrypoint(id_: str | None = None, country: str = "US", state: str = "NY"):
+def entrypoint(id_: str | None = None, country: str = "US", state: str = "NY") -> None:
     s = _fetch(id_, country, state)
     s.out()

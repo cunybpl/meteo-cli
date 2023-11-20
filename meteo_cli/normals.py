@@ -37,5 +37,7 @@ def _fetch(
     return NormalOutput.model_validate({"data": data})
 
 
-def entrypoint(meteostat_id: str, measures: list[str], start_year: int, end_year: int):
+def entrypoint(
+    meteostat_id: str, measures: list[str], start_year: int, end_year: int
+) -> None:
     _fetch(meteostat_id, measures, start_year, end_year).out()

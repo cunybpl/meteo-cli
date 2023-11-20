@@ -2,7 +2,7 @@ import pydantic
 import abc
 import sys
 import csv
-from typing import TypeVar, Generic, Sequence
+from typing import TypeVar, Generic, Sequence, Any
 import enum
 
 
@@ -23,7 +23,7 @@ class MeteoBase(pydantic.BaseModel, abc.ABC):
 
 
 class MeteoEntity(MeteoBase):
-    def fields(self):
+    def fields(self) -> dict[str, pydantic.fields.FieldInfo]:
         return self.model_fields
 
 
@@ -33,7 +33,7 @@ MeteoEntityT = TypeVar("MeteoEntityT", bound=MeteoEntity)
 class CsvOut(pydantic.BaseModel, Generic[MeteoEntityT]):
     data: Sequence[MeteoEntityT] = []
 
-    def out(self):
+    def out(self) -> Any:
         if len(self.data) > 0:
             fieldnames = self.data[0].fields()
             writer = csv.DictWriter(f=sys.stdout, fieldnames=fieldnames)
