@@ -44,5 +44,5 @@ def entrypoint(
     measures: list[str],
     start: datetime.datetime,
     end: datetime.datetime,
-):
+) -> None:
     _fetch(meteostat_id, measures, start, end).out()
